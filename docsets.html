@@ -1,0 +1,416 @@
+
+
+
+
+
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Docset Generation Guide - Kapeli</title>
+    <script>if((window.devicePixelRatio===undefined?1:window.devicePixelRatio)>1) { document.cookie='HTTP_IS_RETINA=true;path=/;domain=kapeli.com'; } else { document.cookie='HTTP_IS_RETINA=false;path=/;domain=kapeli.com'; }</script>
+    <meta name="description" content="Instructions on how to generate Dash docsets are found below. There is no method that is best for every case, so you'll have to consider all and decide which is the best for you.">
+    <link href="/scss/build/screen.css?cache_token=312195" rel="stylesheet" type="text/css">
+    <script src="/bower_components/foundation/js/vendor/modernizr.js"></script>
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-40472361-1']);
+      _gaq.push(['_setDomainName', 'kapeli.com']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+  </head>
+  <body class="regular">
+    <div id="container">
+      <div class="contain-to-grid top-bar-area kapeli-topbar-bg">
+        <nav class="top-bar" data-topbar role="navigation">
+  <ul class="title-area">
+    <li class="name">
+      <h1><a href="/">Kapeli</a></h1>
+    </li>
+    <li class="toggle-topbar menu-icon"><a href="#"><span></span></a></li>
+  </ul>
+  <section class="top-bar-section">
+    <ul class="left">
+      <li class="notactive"><a href="/dash">Dash for macOS</a></li>
+      <li class="notactive"><a href="/dash_ios">Dash for iOS</a></li>
+    </ul>
+    <ul class="right">
+      <li class="notactive"><a href="//blog.kapeli.com">Blog</a></li>
+      <li><a target="_blank" href="https://twitter.com/kapeli">Twitter</a></li>
+      <li class="notactive"><a href="/contact">Contact</a></li>
+    </ul>
+  </section>
+</nav>
+      </div>
+
+<div class="contain-to-grid row body-section-guide">
+    <h1>Docset Generation Guide</h1>
+    <hr>
+    <p class="lead">Instructions on how to generate docsets (for <a href="dash">Dash</a>) are found below. There is no method that is best for every case, so you'll have to consider all and decide which is the best for you. When your docset is ready, please <a target="_blank" href="https://github.com/Kapeli/Dash-User-Contributions#contribute-a-new-docset">contribute it</a> to Dash.</p>
+
+    <p class="lead no-margin-bottom">Generate docsets from:</p>
+    <ul>
+        <li><a href="#objectivec">1. AppleDoc (Objective-C Source Files)</a></li>
+        <li><a href="#python">2. Python, Sphinx or PyDoctor-Generated Documentation</a></li>
+        <li><a href="#javadoc">3. Javadoc-Generated Documentation</a></li>
+        <li><a href="#rdoc">4. RDoc or Yard-Generated Documentation</a></li>
+        <li><a href="#scaladoc">5. Scaladoc-Generated Documentation</a></li>
+        <li><a href="#godoc">6. GoDoc-Generated Documentation</a></li>
+        <li><a href="#exdoc">7. HexDoc-Generated Documentation</a></li>
+        <li><a href="#dartdoc">8. DartDoc-Generated Documentation</a></li>
+        <li><a href="#haddock">9. Haddock-Generated Documentation</a></li>
+        <li><a href="#jsdoc">10. JSDoc Comments</a></li>
+        <li><a href="#doxygen">11. Doxygen (Source Files: C, C++, C#, PHP, Objective-C, Java, Python)</a></li>
+        <li><a href="#dashDocset">12. Any HTML Documentation</a></li>
+        <ul>
+            <li><a href="#setUpFolderStructure">12.1. Create the Docset Folder</a></li>
+            <li><a href="#copyDocumentation">12.2. Copy the HTML Documentation</a></li>
+            <li><a href="#infoplist">12.3. Create the Info.plist File</a></li>
+            <li><a href="#createsqlite">12.4. Create the SQLite Index</a></li>
+            <li><a href="#fillsqlite">12.5. Populate the SQLite Index</a></li>
+            <ul class="no-margin-bottom">
+                <li><a href="#supportedentrytypes">12.5.1. Supported Entry Types</a></li>
+            </ul>
+            <li><a href="#tableofcontents">12.6. Table of Contents Support (optional)</a></li>
+        </ul>
+    </ul>
+    <p class="lead no-margin-bottom">Generation script examples:</p>
+    <ul>
+        <li><a href="#pythonExample">1. Python</a></li>
+        <li><a href="#rubyExample">2. Ruby</a></li>
+        <li><a href="#objcExample">3. Objective-C</a></li>
+        <li><a href="#nodeExample">4. Node.js</a></li>
+        <li><a href="#phpExample">5. PHP</a></li>
+    </ul>
+    <p class="lead no-margin-bottom">Improve your docset:</p>
+    <ul>
+        <li><a href="#contributetodash">1. Contribute it to Dash</a></li>
+        <li><a href="#settingindexpage">2. Set an Index Page</a></li>
+        <li><a href="#addingicon">3. Add an Icon</a></li>
+        <li><a href="#onlineRedirection">4. Support Online Redirection</a></li>
+        <li><a href="#docsetPlaygrounds">5. Support Docset Playgrounds</a></li>
+        <li><a href="#enableJavascript">6. Enable JavaScript</a></li>
+        <li><a href="#dashdocsetfeed">7. Host a Docset Feed</a></li>
+        <li><a href="#sharedocsetfeed">8. Share a Docset Feed</a></li>
+    </ul>
+
+    <h2 id="docsetSources">Docset Sources<span class="permalink"><a href="#docsetSources">#</a></span></h2><hr>
+    <div class="guide-section">
+        <h3 id="objectivec">1. AppleDoc (Objective-C Source Files)<span class="permalink"><a href="#objectivec">#</a></span></h3><hr>
+        <p><a href="https://github.com/tomaz/appledoc#readme">AppleDoc</a> can be used to generate docsets from Objective-C source files. Please note that if you are trying to generate a docset for an Objective-C framework, it's very likely that a docset for that framework is already available in Preferences > Downloads > Cocoa Docsets.</p>
+        <p>When you're done generating your docset, check out some tips on <a href="#improveDocset"><a href="#improveDocset">how to improve it</a></a>.</p>
+    </div>
+    <div class="guide-section">
+        <h3 id="python">2. Python, Sphinx or PyDoctor-Generated Documentation<span class="permalink"><a href="#python">#</a></span></h3><hr>
+        <p>Use <a href="http://pypi.python.org/pypi/doc2dash">http://pypi.python.org/pypi/doc2dash</a> to generate docsets from Python, Sphinx or PyDoctor-generated documentation. When you're done generating your docset, check out some tips on <a href="#improveDocset">how to improve it</a>.</p>
+    </div>
+    <div class="guide-section">
+        <h3 id="javadoc">3. Javadoc-Generated Documentation<span class="permalink"><a href="#javadoc">#</a></span></h3><hr>
+        <p>Use <a target="_blank" href="https://github.com/Kapeli/javadocset#readme">https://github.com/Kapeli/javadocset</a> to generate docsets from Javadoc-generated documentation. When you're done generating your docset, check out some tips on <a href="#improveDocset">how to improve it</a>.</p>
+        <p>You can also install docsets for Java libraries that are on <a target="_blank" href="http://maven.org">Maven.org</a> from Preferences > Downloads > Java Docsets.</p>
+    </div>
+    <div class="guide-section">
+        <h3 id="rdoc">4. RDoc or Yard-Generated Documentation<span class="permalink"><a href="#rdoc">#</a></span></h3><hr>
+        <p>You can install docsets for any Ruby Gem from Preferences > Downloads > Ruby Docsets.</p>
+    </div>
+    <div class="guide-section">
+        <h3 id="scaladoc">5. Scaladoc-Generated Documentation<span class="permalink"><a href="#scaladoc">#</a></span></h3><hr>
+        <p>Use <a target="_blank" href="https://github.com/jastice/sbt-dash">sbt-dash</a> or <a target="_blank" href="https://bitbucket.org/inkytonik/mkscaladocset">mkscaladocset</a> to generate docsets from Scaladoc-generated API documentation. Use <a target="_blank" href="https://github.com/cvogt/scala-dash">scala-dash</a> to generate docsets for Scala manuals. When you're done generating your docset, check out some tips on <a href="#improveDocset">how to improve it</a>.</p>
+        <p>You can also install docsets for Scala libraries that are on <a target="_blank" href="http://maven.org">Maven.org</a> from Preferences > Downloads > Scala Docsets.</p>
+        </div>
+    <div class="guide-section">
+        <h3 id="godoc">6. GoDoc-Generated Documentation<span class="permalink"><a href="#godoc">#</a></span></h3><hr>
+        <p>Use <a target="_blank" href="https://github.com/wuudjac/godocdash#readme">https://github.com/wuudjac/godocdash</a> to generate docsets from GoDoc-generated documentation. When you're done generating your docset, check out some tips on <a href="#improveDocset">how to improve it</a>.</p>
+        <p>You can also install docsets for any Go Package from Preferences > Downloads > Go Docsets.</p>
+    </div>
+    <div class="guide-section">
+        <h3 id="exdoc">7. HexDoc-Generated Documentation<span class="permalink"><a href="#exdoc">#</a></span></h3><hr>
+        <p>You can install docsets for any Hex Package from Preferences > Downloads > Hex Docsets.</p>
+    </div>
+    <div class="guide-section">
+        <h3 id="dartdoc">8. DartDoc-Generated Documentation<span class="permalink"><a href="#dartdoc">#</a></span></h3><hr>
+        <p>You can install docsets for any Dart Package from Preferences > Downloads > Dart Docsets.</p>
+    </div>
+    <div class="guide-section">
+        <h3 id="haddock">9. Haddock-Generated Documentation<span class="permalink"><a href="#haddock">#</a></span></h3><hr>
+        <p>You can install docsets for any Haskell Package from Preferences > Downloads > Haskell Docsets.</p>
+    </div>
+    <div class="guide-section">
+        <h3 id="jsdoc">10. JSDoc Comments<span class="permalink"><a href="#jsdoc">#</a></span></h3><hr>
+        <p>Use <a href="https://github.com/theasta/jsdoc-dash-template#readme">https://github.com/theasta/jsdoc-dash-template</a> to generate docsets from JSDoc comments. When you're done generating your docset, check out some tips on <a href="#improveDocset">how to improve it</a>.</p>
+    </div>
+    <div class="guide-section">
+        <h3 id="doxygen">11. Doxygen (Source Files: C, C++, C#, PHP, Obj-C, Java, Python)<span class="permalink"><a href="#doxygen">#</a></span></h3><hr>
+        <p><a target="_blank" href="http://www.stack.nl/~dimitri/doxygen/">Doxygen</a> can generate docsets from source files of C, C++, C#, PHP, Objective-C, Java, Python (and some others).</p>
+        <p>These are the entries you need to add into your Doxygen config file to make it generate a docset (note: the last 3 entries are optional):</p>
+        <pre>GENERATE_DOCSET   = YES
+DISABLE_INDEX     = YES 
+SEARCHENGINE      = NO
+GENERATE_TREEVIEW = NO</pre>
+        <p>When Doxygen is done generating the documentation, run <code>make</code> inside the generated folder. Note: Doxygen requires <code>docsetutil</code>, which is no longer available starting with Xcode 9.3. You need to either install Xcode 9.2 or older, or check out this <a href="https://github.com/Kapeli/Dash-User-Contributions/pull/1884#issuecomment-389793784">comment on GitHub</a> for an alternative.</p>
+
+        <p>Don't forget to check out some tips on <a href="#improveDocset">how to improve your docset</a>.</p>
+    </div>
+    <div class="guide-section">
+        <h3 id="dashDocset">12. Any HTML Documentation<span class="permalink"><a href="#dashDocset">#</a></span></h3><hr>
+        <p>Docsets are essentially just a folder containing the HTML documentation and a SQLite database that indexes the files.</p>
+        <p>If the HTML docs you want to index are well-formatted, it might be easier to generate the docset using <a target="_blank" href="https://github.com/technosophos/dashing#readme">Dashing</a> instead of writing your own generation script.</p>
+        <div class="guide-section">
+            <h4 id="setUpFolderStructure">12.1. Create the Docset Folder<span class="permalink"><a href="#setUpFolderStructure">#</a></span></h4><hr>
+            <p>The docset folder structure can be created using this Terminal command:</p>
+            <p><pre>mkdir -p &lt;docset name&gt;.docset/Contents/Resources/Documents/</pre></p>
+            <p>You can also manually create the docset structure if you want, they're just folders.</p>
+        </div>
+        <div class="guide-section">
+            <h4 id="copyDocumentation">12.2. Copy the HTML Documentation<span class="permalink"><a href="#copyDocumentation">#</a></span></h4><hr>
+            <p>Copy the HTML documentation you already have to this folder:</p>
+            <pre>&lt;docset name&gt;.docset/Contents/Resources/Documents/</pre>
+        </div>
+        <div class="guide-section">
+            <h4 id="infoplist">12.3. Create the Info.plist File<span class="permalink"><a href="#infoplist">#</a></span></h4><hr>
+            <p>Download and edit this sample <a href="resources/Info.plist">Info.plist</a> and place it in the <code>&lt;docset name&gt;.docset/Contents/</code> folder. Editing should be straightforward, just set the values to whatever name you want for your docset.</p>
+        </div>
+        <div class="guide-section">
+            <h4 id="createsqlite">12.4. Create the SQLite Index<span class="permalink"><a href="#createsqlite">#</a></span></h4><hr>
+            <p>Create a SQLite database in the file <code>&lt;docset name&gt;.docset/Contents/Resources/docSet.dsidx</code> with the following query:</p>
+            <p><pre>CREATE TABLE searchIndex(id INTEGER PRIMARY KEY, name TEXT, type TEXT, path TEXT);</pre></p>
+            <p>Recommended: you can easily prevent adding duplicate entries to the index by also using this query:</p>
+            <pre>CREATE UNIQUE INDEX anchor ON searchIndex (name, type, path);</pre>
+        </div>
+        <div class="guide-section">
+            <h4 id="fillsqlite">12.5. Populate the SQLite Index<span class="permalink"><a href="#fillsqlite">#</a></span></h4><hr>
+            <p>You need to create a script (or application or whatever) that will go through your HTML documentation and add appropriate rows into the SQLite database. Rows can be added using this query:</p>
+            <p><pre>INSERT OR IGNORE INTO searchIndex(name, type, path) VALUES ('name', 'type', 'path');</pre></p>
+            <p>The values are:</p>
+            <ul class="disc">
+                <li><code>name</code> is the name of the entry. For example, if you are adding a class, it would be the name of the class. This is the column that Dash searches.</li>
+                <li><code>type</code> is the type of the entry. For example, if you are adding a class, it would be "Class". For a list of types that Dash recognises, see below.</li>
+                <li><code>path</code> is the relative path towards the documentation file you want Dash to display for this entry. It can contain an anchor (#). Alternatively, Dash also supports <code>http://</code> URL entries.</li>
+            </ul>
+            <p>You can find a few generation script examples <a href="#scriptExamples">here</a>.</p>
+            <div class="guide-section">
+                <h5 id="supportedentrytypes">12.5.1. Supported Entry Types<span class="permalink"><a href="#supportedentrytypes">#</a></span></h5><hr>
+                <div class="types-table no-margin-left">
+                    <ul class="sprite-table responsive-table no-margin-left">
+                        <li><ul><li class="types-Annotation"></li></ul><span>Annotation</span></li>
+                        <li><ul><li class="types-Attribute"></li></ul><span>Attribute</span></li>
+                        <li><ul><li class="types-Binding"></li></ul><span>Binding</span></li>
+                        <li><ul><li class="types-Builtin"></li></ul><span>Builtin</span></li>
+                        <li><ul><li class="types-Callback"></li></ul><span>Callback</span></li>
+                        <li><ul><li class="types-Category"></li></ul><span>Category</span></li>
+                        <li><ul><li class="types-Class"></li></ul><span>Class</span></li>
+                        <li><ul><li class="types-Command"></li></ul><span>Command</span></li>
+                        <li><ul><li class="types-Component"></li></ul><span>Component</span></li>
+                        <li><ul><li class="types-Constant"></li></ul><span>Constant</span></li>
+                        <li><ul><li class="types-Constructor"></li></ul><span>Constructor</span></li>
+                        <li><ul><li class="types-Define"></li></ul><span>Define</span></li>
+                        <li><ul><li class="types-Delegate"></li></ul><span>Delegate</span></li>
+                        <li><ul><li class="types-Diagram"></li></ul><span>Diagram</span></li>
+                        <li><ul><li class="types-Directive"></li></ul><span>Directive</span></li>
+                        <li><ul><li class="types-Element"></li></ul><span>Element</span></li>
+                        <li><ul><li class="types-Entry"></li></ul><span>Entry</span></li>
+                        <li><ul><li class="types-Enum"></li></ul><span>Enum</span></li>
+                        <li><ul><li class="types-Environment"></li></ul><span>Environment</span></li>
+                        <li><ul><li class="types-Error"></li></ul><span>Error</span></li>
+                        <li><ul><li class="types-Event"></li></ul><span>Event</span></li>
+                        <li><ul><li class="types-Exception"></li></ul><span>Exception</span></li>
+                        <li><ul><li class="types-Extension"></li></ul><span>Extension</span></li>
+                        <li><ul><li class="types-Field"></li></ul><span>Field</span></li>
+                        <li><ul><li class="types-File"></li></ul><span>File</span></li>
+                        <li><ul><li class="types-Filter"></li></ul><span>Filter</span></li>
+                        <li><ul><li class="types-Framework"></li></ul><span>Framework</span></li>
+                        <li><ul><li class="types-Function"></li></ul><span>Function</span></li>
+                        <li><ul><li class="types-Global"></li></ul><span>Global</span></li>
+                        <li><ul><li class="types-Guide"></li></ul><span>Guide</span></li>
+                        <li><ul><li class="types-Hook"></li></ul><span>Hook</span></li>
+                        <li><ul><li class="types-Instance"></li></ul><span>Instance</span></li>
+                        <li><ul><li class="types-Instruction"></li></ul><span>Instruction</span></li>
+                        <li><ul><li class="types-Interface"></li></ul><span>Interface</span></li>
+                        <li><ul><li class="types-Keyword"></li></ul><span>Keyword</span></li>
+                        <li><ul><li class="types-Library"></li></ul><span>Library</span></li>
+                        <li><ul><li class="types-Literal"></li></ul><span>Literal</span></li>
+                        <li><ul><li class="types-Macro"></li></ul><span>Macro</span></li>
+                        <li><ul><li class="types-Method"></li></ul><span>Method</span></li>
+                        <li><ul><li class="types-Mixin"></li></ul><span>Mixin</span></li>
+                        <li><ul><li class="types-Modifier"></li></ul><span>Modifier</span></li>
+                        <li><ul><li class="types-Module"></li></ul><span>Module</span></li>
+                        <li><ul><li class="types-Namespace"></li></ul><span>Namespace</span></li>
+                        <li><ul><li class="types-Notation"></li></ul><span>Notation</span></li>
+                        <li><ul><li class="types-Object"></li></ul><span>Object</span></li>
+                        <li><ul><li class="types-Operator"></li></ul><span>Operator</span></li>
+                        <li><ul><li class="types-Option"></li></ul><span>Option</span></li>
+                        <li><ul><li class="types-Package"></li></ul><span>Package</span></li>
+                        <li><ul><li class="types-Parameter"></li></ul><span>Parameter</span></li>
+                        <li><ul><li class="types-Plugin"></li></ul><span>Plugin</span></li>
+                        <li><ul><li class="types-Procedure"></li></ul><span>Procedure</span></li>
+                        <li><ul><li class="types-Property"></li></ul><span>Property</span></li>
+                        <li><ul><li class="types-Protocol"></li></ul><span>Protocol</span></li>
+                        <li><ul><li class="types-Provider"></li></ul><span>Provider</span></li>
+                        <li><ul><li class="types-Provisioner"></li></ul><span>Provisioner</span></li>
+                        <li><ul><li class="types-Query"></li></ul><span>Query</span></li>
+                        <li><ul><li class="types-Record"></li></ul><span>Record</span></li>
+                        <li><ul><li class="types-Resource"></li></ul><span>Resource</span></li>
+                        <li><ul><li class="types-Sample"></li></ul><span>Sample</span></li>
+                        <li><ul><li class="types-Section"></li></ul><span>Section</span></li>
+                        <li><ul><li class="types-Service"></li></ul><span>Service</span></li>
+                        <li><ul><li class="types-Setting"></li></ul><span>Setting</span></li>
+                        <li><ul><li class="types-Shortcut"></li></ul><span>Shortcut</span></li>
+                        <li><ul><li class="types-Statement"></li></ul><span>Statement</span></li>
+                        <li><ul><li class="types-Struct"></li></ul><span>Struct</span></li>
+                        <li><ul><li class="types-Style"></li></ul><span>Style</span></li>
+                        <li><ul><li class="types-Subroutine"></li></ul><span>Subroutine</span></li>
+                        <li><ul><li class="types-Tag"></li></ul><span>Tag</span></li>
+                        <li><ul><li class="types-Test"></li></ul><span>Test</span></li>
+                        <li><ul><li class="types-Trait"></li></ul><span>Trait</span></li>
+                        <li><ul><li class="types-Type"></li></ul><span>Type</span></li>
+                        <li><ul><li class="types-Union"></li></ul><span>Union</span></li>
+                        <li><ul><li class="types-Value"></li></ul><span>Value</span></li>
+                        <li><ul><li class="types-Variable"></li></ul><span>Variable</span></li>
+                        <li><ul><li class="types-Word"></li></ul><span>Word</span></li>
+                    </ul>
+                </div>
+                <p>Please <a href="contact">contact me</a> if none of the currently supported types are suitable for what you're trying to index.</p>
+            </div>
+        </div>
+        <div class="guide-section">
+            <h4 id="tableofcontents">12.6. Table of Contents Support (optional)<span class="permalink"><a href="#tableofcontents">#</a></span></h4><hr>
+            <p>To allow easy navigation inside a large page, Dash is able to show a table of contents at the bottom left. This feature is described in the <a href="dash_guide#tableOfContents">user guide</a>.</p>
+            <p>Please note that adding table of contents support is a bit tricky (and optional).</p>
+            <p>When Dash displays a documentation page, it also looks for special anchors inside the HTML and generates a table of contents. To add table of contents support, you need to go through all the HTML pages and insert anchors in a format that Dash understands. The anchors need to be inserted in the HTML pages themselves.</p>
+            <p>The format for the anchors is: </p><pre>&lt;a name="//apple_ref/cpp/Entry Type/Entry Name" class="dashAnchor"&gt;&lt;/a&gt;</pre>
+            <p>The only things that you need to change in the format above are:</p>
+            <ul class="disc">
+                <li><code>Entry type</code> - one of the <a href="#supportedentrytypes">supported entry types</a>.</li>
+                <li><code>Entry name</code> - the name that is shown by Dash in the table of contents. Preferably, it should be <a target="_blank" href="http://en.wikipedia.org/wiki/Percent-encoding">percent escaped</a>.</li>
+            </ul>
+            <p>You can see an example of how to insert anchors at <a target="_blank" href="https://github.com/zealdocs/zeal/blob/aaa5dff85772921fc91397aa449e0f5316334506/gendocsets/extjs/parse.py#L182">https://github.com/jkozera/zeal/blob/master/gendocsets/extjs/parse.py</a> (in Python).</p>
+            <p>You'll also need to add this entry in the docset's Info.plist:</p>
+            <pre>&lt;key&gt;DashDocSetFamily&lt;/key&gt;
+&lt;string&gt;dashtoc&lt;/string&gt;</pre>
+            <p>Some notes:</p>
+            <ul class="disc">
+                <li>You should URL encode (percent escape) the "Entry Name" if it contains symbols.</li>
+                <li>After changing the Info.plist, you should remove the docset from Preferences > Docsets and re-add it.</li>
+                <li>Do not hesitate to contact me if you are having problems with this. The process is a bit confusing.</li>
+            </ul>
+        </div>
+    </div>
+    <h2 id="scriptExamples">Generation Script Examples<span class="permalink"><a href="#scriptExamples">#</a></span></h2><hr>
+    <div class="guide-section">
+        <h3 id="pythonExample">1. Python<span class="permalink"><a href="#pythonExample">#</a></span></h3><hr>
+        <p>See <a target="_blank" href="https://github.com/drbraden/pgdash">https://github.com/drbraden/pgdash</a>.</p>
+    </div>
+    <div class="guide-section">
+        <h3 id="rubyExample">2. Ruby<span class="permalink"><a href="#rubyExample">#</a></span></h3><hr>
+        <p>See <a target="_blank" href="https://github.com/Kapeli/erlang-docset/blob/master/src/generate.rb">https://github.com/Kapeli/erlang-docset</a>.</p>
+    </div>
+    <div class="guide-section">
+        <h3 id="objcExample">3. Objective-C<span class="permalink"><a href="#objcExample">#</a></span></h3><hr>
+        <p>See <a target="_blank" href="https://github.com/Kapeli/javadocset">https://github.com/Kapeli/javadocset</a>.</p>
+    </div>
+    <div class="guide-section">
+        <h3 id="nodeExample">4. Node.js<span class="permalink"><a href="#nodeExample">#</a></span></h3><hr>
+        <p>See <a target="_blank" href="https://github.com/exlee/d3-dash-gen">https://github.com/exlee/d3-dash-gen</a>.</p>
+    </div>
+    <div class="guide-section">
+        <h3 id="phpExample">5. PHP<span class="permalink"><a href="#phpExample">#</a></span></h3><hr>
+        <p>See <a target="_blank" href="https://github.com/akirk/dash-phpunit">https://github.com/akirk/dash-phpunit</a>.</p>
+    </div>
+    <h2 id="improveDocset">Improve Your Docset<span class="permalink"><a href="#improveDocset">#</a></span></h2><hr>
+    <div class="guide-section">
+    <h3 id="contributetodash">1. Contribute it to Dash<span class="permalink"><a href="#contributetodash">#</a></span></h3><hr>
+        <p>See <a target="_blank" href="https://github.com/Kapeli/Dash-User-Contributions#contribute-a-new-docset">https://github.com/Kapeli/Dash-User-Contributions</a>.</p>
+    </div>
+    <div class="guide-section">
+        <h3 id="settingindexpage">2. Set an Index Page<span class="permalink"><a href="#settingindexpage">#</a></span></h3><hr>
+        <p>Dash displays an index page when you highlight a docset in the documentation browser. If Dash can't find a suitable index page automatically, you can specify it inside the Info.plist by adding the following entry:</p>
+        <pre>&lt;key&gt;dashIndexFilePath&lt;/key&gt;
+&lt;string&gt;index.html&lt;/string&gt;</pre>
+        <p>The path should be relative to the <code>Documents</code> folder inside the docset. It can also be a <code>http://</code> URL.</p>
+        <p>After adding the index, remove and re-add the docset in Dash's Preferences.</p>
+    </div>
+    <div class="guide-section">
+        <h3 id="addingicon">3. Add an Icon<span class="permalink"><a href="#addingicon">#</a></span></h3><hr>
+        <p>To set a custom icon for your docset, simply add a <code>icon.png</code> file directly inside the docset bundle. For example, the file path would be <code>&lt;docset name&gt;.docset/icon.png</code>.</p>
+
+        <p>The size of the icon should be 16x16 or 32x32. For Retina display support, you can either use a single 32x32 icon or 2 separate icons: <code>icon.png</code> (16x16) and <code>icon@2x.png</code> (32x32).</p>
+
+        <p>After adding the icon, remove and re-add the docset in Dash's Preferences.</p>
+    </div>
+    <div class="guide-section">
+        <h3 id="onlineRedirection">4. Support Online Redirection<span class="permalink"><a href="#onlineRedirection">#</a></span></h3><hr>
+        <p>Starting with version 3.0, Dash users can open the online version of pages inside docsets. To do that, Dash needs to know where to find the online pages for your docset.</p>
+        <p>You have 2 options to support online redirection:</p>
+        <ul class="disc">
+            <li>Set the <code>DashDocSetFallbackURL</code> key in your docset's Info.plist. The value should be the base URL of the docs. Example: <code>https://docs.python.org/3/library/</code></li>
+            <li>
+                <p>Alternatively, add a HTML comment inside each and every HTML file of your docset. The comment needs to be added next to the <code>&lt;html&gt;</code> tag of the pages and should look like this:</p>
+                <pre>&lt;html&gt;&lt;!-- Online page at https://docs.python.org/3/library/intro.html --&gt;</pre>
+            </li>
+        </ul>
+    </div>    
+    <div class="guide-section">
+        <h3 id="docsetPlaygrounds">5. Support Docset Playgrounds<span class="permalink"><a href="#docsetPlaygrounds">#</a></span></h3><hr>
+        <p>Starting with version 4.0, Dash now shows a play button next to docsets which takes users to a playground for the language/framework of the docset. To support it you need to:</p>
+        <ul class="disc">
+            <li>Set the <code>DashDocSetPlayURL</code> key in your docset's Info.plist. The value should be the URL of the docset playground. Example: <code><a href="https://repl.it/F9J7/1">https://repl.it/F9J7/1</a></code> for the Swift docset.</li>
+        </ul>
+    </div>
+    <div class="guide-section">
+        <h3 id="enableJavascript">6. Enable JavaScript<span class="permalink"><a href="#enableJavascript">#</a></span></h3><hr>
+        <p>By default, Dash does not allow external <code>.js</code> scripts. You can enable them by adding this entry to the docset's Info.plist:</p>
+        <pre>&lt;key&gt;isJavaScriptEnabled&lt;/key&gt;&lt;true/&gt;</pre>
+        <p>After adding this entry, remove and re-add the docset in Dash's Preferences.</p>
+    </div>
+    <div class="guide-section">
+        <h3 id="dashdocsetfeed">7. Host a Docset Feed<span class="permalink"><a href="#dashdocsetfeed">#</a></span></h3><hr>
+        <p><strong>Important:</strong> It is highly recommended that you <a target="_blank" href="https://github.com/Kapeli/Dash-User-Contributions#contribute-a-new-docset">contribute your docset</a> to Dash instead of setting up a docset feed. Docset feeds should only be used for docsets which only you, your team or very few users find useful.</p>
+        <p>Documentation feeds allow Dash users to conveniently install and update docsets. If you want to distribute a docset you should set up a feed for it, so that you'll be able to update it in the future.</p>
+        <p>Dash documentation feeds are very simple, check one out: <a href="resources/NodeJS_Sample.xml">NodeJS_Sample.xml</a>.</p>
+        <p>It's a XML file that contains the following:</p>
+        <ul class="disc">
+            <li>A root <code>&lt;entry&gt;</code> element
+                <ul class="disc">
+                    <li>A <code>&lt;version&gt;</code> element. You can use any versioning system you want. Dash will use string comparison to determine whether or not to download an update.</li>
+                    <li>One or several <code>&lt;url&gt;</code> elements. These point to the URL of the archived docset.</li>
+                </ul>
+            </li>
+        </ul>
+        <p>To archive your docset, use the following command:</p>
+        <pre>tar --exclude='.DS_Store' -cvzf &lt;docset name&gt;.tgz &lt;docset name&gt;.docset</pre>
+        <p>Currently only one docset per feed is supported (only one <code>&lt;entry&gt;</code>).</p>
+    </div>
+    <div class="guide-section">
+        <h3 id="sharedocsetfeed">8. Share a Docset Feed<span class="permalink"><a href="#sharedocsetfeed">#</a></span></h3><hr>
+        <p>You can share docset feeds using a custom URL scheme, which will allow Dash to subscribe to that feed with a single click.</p>
+        <pre>dash-feed://&lt;URL encoded feed URL&gt;</pre>
+        <p>By URL encoded, I mean percent-encoding (e.g. what you&#8217;d get by clicking the encode button <a target="_blank" href="http://meyerweb.com/eric/tools/dencoder/">here</a>).</p>
+        <p>Example:</p>
+        <ul class="disc">
+            <li><a href="dash-feed://http%3A%2F%2Fkapeli.com%2Ffeeds%2FNodeJS.xml">dash-feed://http%3A%2F%2Fkapeli.com%2Ffeeds%2FNodeJS.xml</a></li>
+            <ul class="disc">
+                <li>Subscribes to the <a href="//kapeli.com/feeds/NodeJS.xml">http://kapeli.com/feeds/NodeJS.xml</a> feed</li>
+            </li></ul>
+        </ul>
+    </div>
+</div>
+<!-- The blog doesn't use this footer file. It uses ./.themes/kapeli/source/_includes/footer.html instead -->
+    <div id="footer-margin"></div>
+    <div id="footer-layout"></div>
+</div>
+<footer id="footer" class="text-center">
+    <span><a href="//kapeli.com/license_agreement">License Agreement</a></span><span style='margin-left:70px'><a href="//kapeli.com/privacy_policy">Privacy Policy</a></span>
+</footer>
+<script src="/js/app.min.js"></script>  </body>
+</html>
