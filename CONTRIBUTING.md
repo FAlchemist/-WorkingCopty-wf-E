@@ -1,176 +1,79 @@
-# Contributing to Greenkeeper
+# Want to contribute?
 
-## Table of Contents
+So you’ve taken a liking to Edit Flow and decided you want to give back. That's awesome! We'd love to have you help.
 
-- [Code of conduct](#code-of-conduct)
-- [Development setup](#development-setup)
-- [Submitting a Pull Request](#submitting-a-pull-request)
-- [Commit message guidelines](#commit-message-guidelines)
+Bug Reports
+------
 
-## Code of conduct
+Find a bug in Edit Flow? Let us know about it by creating a [new issue](https://github.com/Automattic/Edit-Flow/issues). Some recommendations for filing great bug reports below.
 
-Help us keep **Greenkeeper** open and inclusive. Please read and follow our [Code of conduct](CODE_OF_CONDUCT.md).
+###### Great Bug Reports
 
-## Development setup
+**1. Is it really a bug?**
 
-[Fork](https://guides.github.com/activities/forking/#fork) the project, [clone](https://guides.github.com/activities/forking/#clone) your fork, configure the remotes and install the dependencies:
+Before filing a bug report, make sure you're running the latest versions of Edit Flow and WordPress. 
 
-```bash
-# Clone your fork of the repo into the current directory
-$ git clone https://github.com/<YOUR ACCOUNT>/greenkeeper.git
-# Navigate to the newly cloned directory
-$ cd greenkeeper
-# Assign the original repo to a remote called "upstream"
-$ git remote add upstream https://github.com/greenkeeperio/greenkeeper
-# Install the dependencies
-$ npm install
-```
+Turn off all other plugins and switch to the default WordPress theme. If you still encounter the issue then you might have found a bug.
 
-### Tests
+If the issue dissaepars, it was probably a conflict with one of your plugins or themes. Try activating only Edit flow and that theme or plugin to eliminate other variables. When the issue reappears, you've found the guilty party.
 
-To run the tests you will need [Docker](https://docs.docker.com/engine/installation)
+**2. Has the issue already been reported?**
 
-```bash
-# Install CouchDB on Docker
-$ docker pull apache/couchdb:2.1.1
-```
-A fake private key in the .env file is needed generate it like this:
-* Linux
-```bash
-$ (echo -n "PRIVATE_KEY="; openssl genrsa 2>/dev/null | gzip | base64 -w0) >> .env
-```
-* Mac:
-```bash
-$ (echo -n "PRIVATE_KEY="; openssl genrsa 2>/dev/null | gzip | base64) >> .env
-```
+To check if a bug has already been reported, try:
+ * Checking the current [list of opened issues](https://github.com/Automattic/Edit-Flow/issues?q=is%3Aopen)
+ * Looking through the [Edit Flow Support Forums](https://wordpress.org/support/plugin/edit-flow)
 
-And at last try to run the tests
-```bash
-$ npm test
-```
+Not mentioned in either of those places? Doesn't appear to be caused by a conflict with another plugin or theme? You've found a bug!
 
-Read more about our Jest [tests](https://github.com/greenkeeperio/greenkeeper/tree/master/test)
+**3. It's all in the details**
 
-#### Test Troubleshooting
+The more specific you can be, the easier it will be for someone to tackle the bug. 
 
-* Tests fail with: **incorrect header check**
-  * you need the fake private key in your .env !
+When creating a new issue a concise summary and clear description are key. If it's been mentioned by someone else, like on the [Edit Flow Support Forums](https://wordpress.org/support/plugin/edit-flow), include a link.
 
-## Submitting a Pull Request
+Here's a sample of what a great summary looks like:
 
-Good pull requests whether patches, improvements or new features are a fantastic help. They should remain focused in scope and avoid containing unrelated commits.
+	Summary of the issue: The Edit Flow Calendar module is stuck on February 2
 
-**Please ask first** before embarking on any significant pull request (e.g. implementing features, refactoring code), otherwise you risk spending a lot of time working on something that the project's developers might not want to merge into the project.
+	Steps to reproduce:
 
-If you never created a pull request before, welcome 🎉 😄. [Here is a great tutorial](https://opensource.guide/how-to-contribute/#opening-a-pull-request) on how to send one :)
+	1. *Activate the Calendar module*
+	2. *Click the "Calendar" link in the sidebar*
 
-Here is a summary of the steps to follow:
+	Expected behavior: *The calendar should highlight today's date*
 
-1. [Set up the development enviroment](#development-setup)
-2. If you cloned a while ago, get the latest changes from upstream and update dependencies:
-```bash
-$ git checkout master
-$ git pull upstream master
-$ rm -rf node_modules
-$ npm install
-```
-3. Create a new topic branch (off the main project development branch) to contain your feature, change, or fix:
-```bash
-$ git checkout -b <topic-branch-name>
-```
-4. Make your commits, follow the [Commit message guidelines](#commit-message-guidelines)
-5. Push your topic branch up to your fork:
-```bash
-$ git push origin <topic-branch-name>
-```
-6. [Open a Pull Request](https://help.github.com/articles/creating-a-pull-request/#creating-the-pull-request) with a clear title and description.
+	Actual behavior: *The calendar higlights February 2 as today's date*
 
-**Tips**:
-- For ambitious tasks, open a Pull Request as soon as possible with the `[WIP]` prefix in the title, in order to get feedback and help from the community.
-- [Allow Greenkeeper maintainers to make changes to your Pull Request branch](https://help.github.com/articles/allowing-changes-to-a-pull-request-branch-created-from-a-fork) this way we can rebase it and make some minor changes if necessary. All changes we make will be done in new commit and we'll ask for your approval before merging them.
+	Screenshots: *screenshot of behavior/error goes here*
 
-## Commit message guidelines
+Creating and submitting Patches
+------
 
-Greenkeeper uses [semantic-release](https://github.com/semantic-release/semantic-release) for automated version management and package publishing. For that to work, commitmessages need to be in the right format.
+###### Creating the patch
 
-### Atomic commits
+If you’re fixing a bug, start by forking [Edit Flow's repository](https://github.com/Automattic/Edit-Flow/i) and clone that new fork of Edit Flow to your computer. 
 
-If possible, make [atomic commits](https://en.wikipedia.org/wiki/Atomic_commit), which means:
-- a commit should contain exactly one self-contained functional change
-- a functional change should be contained in exactly one commit
-- a commit should not create an inconsistent state (such as test errors, linting errors, partial fix, feature with documentation etc...)
+When writing your patch, make sure your code conforms to the [WordPress coding standards](https://make.wordpress.org/core/handbook/best-practices/coding-standards/#language-specific-standards). This guide will be used when reviewing your patch.
 
-A complex feature can be broken down into multiple commits as long as each one keep a consistent state and consist of a self-contained change.
+Also, make sure that your patch is documented correctly. Please follow the [WordPress inline documentation standards](https://make.wordpress.org/core/handbook/best-practices/inline-documentation-standards/#language-specific-standards) when documenting the code in your patch.
 
-### Commit message format
+###### Submitting the patch
 
-Each commit message consists of a **header**, a **body** and a **footer**. The header has a special format that includes a **type**, a **scope** and a **subject**:
+To share the changes you’ve made, you’ll need to push your changes to your repository on GitHub, and submit a pull request.
 
-```commit
-<type>(<scope>): <subject>
-<BLANK LINE>
-<body>
-<BLANK LINE>
-<footer>
-```
+Keep the first line of your commit message brief. A quick explanation of your changes should do nicely. Go into more details on the following lines.
 
-The **header** is mandatory and the **scope** of the header is optional.
+Not sure what to include your commit message? Take a look at the ["Description" section of the WordPress commit message documentation](https://make.wordpress.org/core/handbook/best-practices/commit-messages/#description). There is great advice for what should be included in when writing a clear, concise and relevant commit message.
 
-The **footer** can contain a [closing reference to an issue](https://help.github.com/articles/closing-issues-via-commit-messages).
+After you've commited, push to your fork and create a Pull Request on Github.
 
-### Revert
+Extending Edit Flow
+------
 
-If the commit reverts a previous commit, it should begin with `revert: `, followed by the header of the reverted commit. In the body it should say: `This reverts commit <hash>.`, where the hash is the SHA of the commit being reverted.
+Not sure you're ready to write a patch? Why not try extending Edit Flow? Take a look [here](http://editflow.org/extend/) for some ideas on how to extend current Edit Flow functionality.
 
-### Type
+The [Edit Flow Support Forums](https://wordpress.org/support/plugin/edit-flow) often have requests to add functionality to Edit Flow. Try and see if you can create this functionality by extending Edit Flow without modifying Edit Flow core. 
 
-The type must be one of the following:
+It's a great way to add functionality to existing Edit Flow installations without having to go through the process of patching Edit Flow core.
 
-| Type         | Description                                                                                                 |
-|--------------|-------------------------------------------------------------------------------------------------------------|
-| **build**    | Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)         |
-| **ci**       | Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs) |
-| **docs**     | Documentation only changes                                                                                  |
-| **feat**     | A new feature                                                                                               |
-| **fix**      | A bug fix                                                                                                   |
-| **perf**     | A code change that improves performance                                                                     |
-| **refactor** | A code change that neither fixes a bug nor adds a feature                                                   |
-| **style**    | Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)      |
-| **test**     | Adding missing tests or correcting existing tests                                                           |
-
-### Subject
-
-The subject contains succinct description of the change:
-
-- use the imperative, present tense: "change" not "changed" nor "changes"
-- don't capitalize first letter
-- no dot (.) at the end
-
-### Body
-Just as in the **subject**, use the imperative, present tense: "change" not "changed" nor "changes".
-The body should include the motivation for the change and contrast this with previous behavior.
-
-### Footer
-The footer should contain any information about **Breaking Changes** and is also the place to reference GitHub issues that this commit **Closes**.
-
-**Breaking Changes** should start with the word `BREAKING CHANGE:` with a space or two newlines. The rest of the commit message is then used for this.
-
-### Examples
-
-```commit
-`fix(pencil): stop graphite breaking when too much pressure applied`
-```
-
-```commit
-`feat(pencil): add 'graphiteWidth' option`
-
-Fix #42
-```
-
-```commit
-perf(pencil): remove graphiteWidth option`
-
-BREAKING CHANGE: The graphiteWidth option has been removed.
-
-The default graphite width of 10mm is always used for performance reasons.
-```
+(Props to Jetpack. These contributing guidelines were based on the [Contribute](https://jetpack.com/contribute/#contribute) section on the Jetpack website and the [Contributing](https://github.com/Automattic/jetpack/blob/master/.github/CONTRIBUTING.md) section in the [Jetpack Github repository](https://github.com/Automattic/jetpack/))
