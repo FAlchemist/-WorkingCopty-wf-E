@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>2018.01.11 Update Regarding ACME TLS-SNI and Shared Hosting Infrastructure - Incidents - Let&#39;s Encrypt Community Support</title>
+    <meta name="description" content="[Update 2018-01-18: The most up-to-date summary is at IMPORTANT: What you need to know about TLS-SNI validation issues] 
+Please see this post for background information. 
+The last 48 hours have been a busy time for Let’s&amp;hellip;">
+    <meta name="author" content="">
+<meta name="generator" content="Discourse 2.2.0.beta2 - https://github.com/discourse/discourse version 1a64b3a4871cceb1b42d5c54ada58ab1241022f6">
+<link rel="icon" type="image/png" href="https://cdn.discourse.org/letsencrypt/uploads/default/original/1X/8529b324ee54a8f85c38260975250e39582cfefe.png">
+<link rel="apple-touch-icon" type="image/png" href="https://cdn.discourse.org/letsencrypt/uploads/default/original/1X/8529b324ee54a8f85c38260975250e39582cfefe.png">
+<link rel="icon" type="image/png" sizes="144x144" href="https://cdn.discourse.org/letsencrypt/uploads/default/original/1X/8529b324ee54a8f85c38260975250e39582cfefe.png">
+<meta name="theme-color" content="#ffffff">
+<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+<link rel="canonical" href="https://community.letsencrypt.org/t/2018-01-11-update-regarding-acme-tls-sni-and-shared-hosting-infrastructure/50188" />
+<script type="application/ld+json">{"@context":"http://schema.org","@type":"WebSite","url":"https://community.letsencrypt.org","potentialAction":{"@type":"SearchAction","target":"https://community.letsencrypt.org/search?q={search_term_string}","query-input":"required name=search_term_string"}}</script>
+<link rel="search" type="application/opensearchdescription+xml" href="https://community.letsencrypt.org/opensearch.xml" title="Let&#39;s Encrypt Community Support Search">
+
+      <link href="https://discourse-cdn-sjc1.com/letsencrypt/stylesheets/desktop_d8fb48ac371fb3cec37d7f39befff5b5c5beec3e.css?__ws=community.letsencrypt.org" media="all" rel="stylesheet" data-target="desktop" data-theme-id="3"/>
+      <link href="https://discourse-cdn-sjc1.com/letsencrypt/stylesheets/desktop_theme_3_220bb10ca27ff39519e967aee83e69f98a77959d.css?__ws=community.letsencrypt.org" media="all" rel="stylesheet" data-target="desktop_theme" data-theme-id="3"/>
+    
+    
+      <link rel="alternate" type="application/rss+xml" title="RSS feed of &#39;2018.01.11 Update Regarding ACME TLS-SNI and Shared Hosting Infrastructure&#39;" href="https://community.letsencrypt.org/t/2018-01-11-update-regarding-acme-tls-sni-and-shared-hosting-infrastructure/50188.rss" />
+  <meta property="og:site_name" content="Let&#39;s Encrypt Community Support" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:image" content="https://cdn.discourse.org/letsencrypt/uploads/default/original/1X/8529b324ee54a8f85c38260975250e39582cfefe.png" />
+<meta property="og:image" content="https://cdn.discourse.org/letsencrypt/uploads/default/original/1X/8529b324ee54a8f85c38260975250e39582cfefe.png" />
+<meta property="og:url" content="https://community.letsencrypt.org/t/2018-01-11-update-regarding-acme-tls-sni-and-shared-hosting-infrastructure/50188" />
+<meta name="twitter:url" content="https://community.letsencrypt.org/t/2018-01-11-update-regarding-acme-tls-sni-and-shared-hosting-infrastructure/50188" />
+<meta property="og:title" content="2018.01.11 Update Regarding ACME TLS-SNI and Shared Hosting Infrastructure" />
+<meta name="twitter:title" content="2018.01.11 Update Regarding ACME TLS-SNI and Shared Hosting Infrastructure" />
+<meta property="og:description" content="[Update 2018-01-18: The most up-to-date summary is at IMPORTANT: What you need to know about TLS-SNI validation issues]  Please see this post for background information.  The last 48 hours have been a busy time for Let’s Encrypt staff. We’ve been working hard to come up with a plan for ACME TLS-SNI validation that sufficiently protects the integrity of Web PKI while minimizing problems for people and organizations using TLS-SNI validation for HTTPS deployments. We’d like to thank our community a..." />
+<meta name="twitter:description" content="[Update 2018-01-18: The most up-to-date summary is at IMPORTANT: What you need to know about TLS-SNI validation issues]  Please see this post for background information.  The last 48 hours have been a busy time for Let’s Encrypt staff. We’ve been working hard to come up with a plan for ACME TLS-SNI validation that sufficiently protects the integrity of Web PKI while minimizing problems for people and organizations using TLS-SNI validation for HTTPS deployments. We’d like to thank our community a..." />
+<meta name="twitter:label1" value="Reading time" />
+<meta name="twitter:data1" value="1 mins 🕑" />
+<meta name="twitter:label2" value="Likes" />
+<meta name="twitter:data2" value="23 ❤" />
+<meta property="article:published_time" content="2018-01-11T22:12:38+00:00" />
+<meta property="og:ignore_canonical" content="true" />
+
+
+  </head>
+  <body class="crawler">
+    <script>
+/* Status.io Widget */
+
+$('.current-status-indicator').ready(function($){
+  var statusAPI = "https://api.status.io/1.0/status/55957a99e800baa4470002da";
+  var maxStatusCode = "";
+  var maxStatusDescription = "";
+  var sc = "";
+  var sd = "";
+  $.getJSON(statusAPI)
+  .done(function(data){
+    $.each(data.result.status, function(s,status){
+      $.each(data.result.status[s].containers, function(c,containers){
+        sc = data.result.status[s].containers[c].status_code;
+        sd = data.result.status[s].containers[c].status;
+        if (maxStatusCode < sc){
+          maxStatusCode = sc
+          maxStatusDescription = "Service status: " + sd
+        }
+      })
+    })
+    if (maxStatusCode === ""){
+      return;
+    }
+    $("#current-status-description").text(maxStatusDescription);
+    // Operational
+    if (maxStatusCode === 100){
+      $("#current-status-description").addClass("green");
+    }
+    // Scheduled Maintenance
+    if (maxStatusCode === 200){
+      $("#current-status-description").addClass("blue");
+    }
+    // Degraded Performance || Partial Outage
+    if (maxStatusCode === 300 || maxStatusCode === 400){
+      $("#current-status-description").addClass("yellow");
+    }
+    // Service Disrtuption || Security Issue
+    if (maxStatusCode === 500 || maxStatusCode === 600){
+      $("#current-status-description").addClass("red");
+    }
+  })
+});
+</script>
+    <header>
+      <a href="/"><img src="https://cdn.discourse.org/letsencrypt/uploads/default/original/1X/149e86cd7f135095e9c92f4e67a4b6a7b80a60c0.png" alt="Let&#39;s Encrypt Community Support" id="site-logo" style="max-width: 150px;"></a>
+    </header>
+    <div id="main-outlet" class="wrap">
+      <h1>
+  <a href="/t/2018-01-11-update-regarding-acme-tls-sni-and-shared-hosting-infrastructure/50188">2018.01.11 Update Regarding ACME TLS-SNI and Shared Hosting Infrastructure</a>
+</h1>
+
+<div id='breadcrumbs'>
+    <div id="breadcrumb-0" itemscope itemtype="http://data-vocabulary.org/Breadcrumb"
+>
+      <a href="/c/incidents" itemprop="url">
+        <span itemprop="title">Incidents</span>
+      </a>
+    </div>
+</div>
+
+
+
+
+
+<hr>
+
+
+  <div itemscope itemtype='http://schema.org/DiscussionForumPosting'>
+      <div class='creator'>
+        <span>
+          <a href='/u/josh'><b itemprop='author'>josh</b></a>
+           
+           <time datetime='2018-01-11T22:12:38Z' itemprop='datePublished'>
+             2018-01-11 22:12:38 UTC
+           </time>
+        </span>
+        <span itemprop='position'>#1</span>
+      </div>
+      <div class='post' itemprop='articleBody'>
+        <p>[Update 2018-01-18: The most up-to-date summary is at <a href="https://community.letsencrypt.org/t/important-what-you-need-to-know-about-tls-sni-validation-issues/50811">IMPORTANT: What you need to know about TLS-SNI validation issues</a>]</p>
+<p>Please see <a href="https://community.letsencrypt.org/t/2018-01-09-issue-with-tls-sni-01-and-shared-hosting-infrastructure/49996">this post</a> for background information.</p>
+<p>The last 48 hours have been a busy time for Let’s Encrypt staff. We’ve been working hard to come up with a plan for ACME TLS-SNI validation that sufficiently protects the integrity of Web PKI while minimizing problems for people and organizations using TLS-SNI validation for HTTPS deployments. We’d like to thank our community and partners for the incredibly helpful input we’ve received.</p>
+<p>We have arrived at the conclusion that we cannot generally re-enable TLS-SNI validation. There are simply too many vulnerable shared hosting and infrastructure services that violate the assumptions behind TLS-SNI validation. We will be executing the following plan to mitigate impact and entirely sunset the TLS-SNI-01 and TLS-SNI-02 validation methods.</p>
+<p><strong>TLS-SNI Validation Will Remain Disabled For New Accounts</strong></p>
+<p>The ACME TLS-SNI-01 validation method will remain disabled permanently for new accounts by default. Since the same problems apply to TLS-SNI-02, TLS-SNI-02 will remain disabled in our upcoming ACMEv2 API endpoint.</p>
+<p><strong>Mitigations for Existing TLS-SNI Users</strong></p>
+<p>Our recommendation for users is to begin a migration to the HTTP-01 or DNS-01 validation methods. We are working to provide a reasonable amount of migration time for as many users as possible, while maintaining our commitment to security.</p>
+<p>We will implement renewal-only validation through TLS-SNI-01, based on account credentials. That is, if a given account has previously issued a certificate with Let’s Encrypt for a domain name we will allow that account to revalidate and reissue using TLS-SNI-01 for that domain name for a limited time (to be determined). [<a href="https://community.letsencrypt.org/t/tls-sni-challenges-disabled-for-most-new-issuance/50316">Update 2018-01-13 01:36 UTC: this is now live</a>]</p>
+<p>We will maintain a short-to-medium term whitelist based on ACME account IDs and/or stable validation IP address ranges that will allow us to enable TLS-SNI-01 validation for large providers (10k+ active certificates) that are not vulnerable to exploitation. Please understand that since we have limited staff resources to build and maintain this whitelist, we strongly encourage people to move to HTTP or DNS validation rather than attempt to get on the TLS-SNI-01 whitelist.</p>
+<p>For most people using the TLS-SNI validation method, moving to the HTTP validation method will be the easiest path forward.</p>
+<p><strong>ACME Client Updates</strong></p>
+<p>We are working with ACME client developers whose clients rely on TLS-SNI validation to get updates out as quickly as possible. The Certbot client expects to have an update out within the next few days.</p>
+<p><strong>ACME Protocol Updates</strong></p>
+<p>We will engage with the IETF ACME working group to decide the future of TLS-SNI validation and remediations to the discovered problems.</p>
+      </div>
+      <meta itemprop='interactionCount' content='UserLikes:20'>
+      <meta itemprop='interactionCount' content='UserComments:0'>
+      <meta itemprop='headline' content='2018.01.11 Update Regarding ACME TLS-SNI and Shared Hosting Infrastructure'>
+      <hr>
+            <a href="https://community.letsencrypt.org/t/important-what-you-need-to-know-about-tls-sni-validation-issues/50811">IMPORTANT: What you need to know about TLS-SNI validation issues</a>
+            <hr>
+            <a href="https://community.letsencrypt.org/t/tls-sni-challenges-disabled-for-most-new-issuance/50316">TLS-SNI challenges disabled for most new issuance</a>
+            <hr>
+            <a href="https://community.letsencrypt.org/t/2018-01-09-issue-with-tls-sni-01-and-shared-hosting-infrastructure/49996/4">2018.01.09 Issue with TLS-SNI-01 and Shared Hosting Infrastructure</a>
+            <hr>
+            <a href="https://community.letsencrypt.org/t/help-test-certbot-apache-and-nginx-fixes-for-tls-sni-01-outage/50207">Help test Certbot Apache and Nginx fixes for TLS-SNI-01 outage</a>
+            <hr>
+            <a href="https://community.letsencrypt.org/t/tls-sni-via-caa/50172/11">TLS-SNI via CAA</a>
+            <hr>
+            <a href="https://community.letsencrypt.org/t/certbot-0-21-0-release/50725">Certbot 0.21.0 Release</a>
+            <hr>
+            <a href="https://community.letsencrypt.org/t/http-verification-failure-for-a-single-domain/50337">HTTP verification failure for a single domain</a>
+            <hr>
+            <a href="https://community.letsencrypt.org/t/unauthorized-404-error-well-known-acme-challenge-on-a-hosting-web-space/55512/5">Unauthorized 404 Error well-known/acme-challenge on a hosting web space</a>
+            <hr>
+  </div>
+  <div itemscope itemtype='http://schema.org/DiscussionForumPosting'>
+      <div class='creator'>
+        <span>
+          <a href='/u/bmw'><b itemprop='author'>bmw</b></a>
+           
+           <time datetime='2018-01-12T01:52:33Z' itemprop='datePublished'>
+             2018-01-12 01:52:33 UTC
+           </time>
+        </span>
+        <span itemprop='position'>#2</span>
+      </div>
+      <div class='post' itemprop='articleBody'>
+        <p>If you’re interested in helping test fixes for these problems in Certbot’s Apache or Nginx plugins, please see <a href="https://community.letsencrypt.org/t/help-test-certbot-apache-and-nginx-fixes-for-tls-sni-01-outage/50207">Help test Certbot Apache and Nginx fixes for TLS-SNI-01 outage</a>.</p>
+      </div>
+      <meta itemprop='interactionCount' content='UserLikes:3'>
+      <meta itemprop='interactionCount' content='UserComments:0'>
+      <meta itemprop='headline' content='2018.01.11 Update Regarding ACME TLS-SNI and Shared Hosting Infrastructure'>
+      <hr>
+  </div>
+  <div itemscope itemtype='http://schema.org/DiscussionForumPosting'>
+      <div class='creator'>
+        <span>
+          <a href='/u/jsha'><b itemprop='author'>jsha</b></a>
+           
+           <time datetime='2018-01-12T07:59:25Z' itemprop='datePublished'>
+             2018-01-12 07:59:25 UTC
+           </time>
+        </span>
+        <span itemprop='position'>#3</span>
+      </div>
+      <div class='post' itemprop='articleBody'>
+        
+      </div>
+      <meta itemprop='interactionCount' content='UserLikes:0'>
+      <meta itemprop='interactionCount' content='UserComments:0'>
+      <meta itemprop='headline' content='2018.01.11 Update Regarding ACME TLS-SNI and Shared Hosting Infrastructure'>
+      <hr>
+  </div>
+  <div itemscope itemtype='http://schema.org/DiscussionForumPosting'>
+      <div class='creator'>
+        <span>
+          <a href='/u/jsha'><b itemprop='author'>jsha</b></a>
+           
+           <time datetime='2018-01-13T01:00:26Z' itemprop='datePublished'>
+             2018-01-13 01:00:26 UTC
+           </time>
+        </span>
+        <span itemprop='position'>#4</span>
+      </div>
+      <div class='post' itemprop='articleBody'>
+        
+      </div>
+      <meta itemprop='interactionCount' content='UserLikes:0'>
+      <meta itemprop='interactionCount' content='UserComments:0'>
+      <meta itemprop='headline' content='2018.01.11 Update Regarding ACME TLS-SNI and Shared Hosting Infrastructure'>
+      <hr>
+  </div>
+
+
+
+
+
+
+    </div>
+    <footer class="container">
+      <nav itemscope itemtype='http://schema.org/SiteNavigationElement'>
+        <a href='/'>Home</a>
+        <a href="/categories">Categories</a>
+        <a href="/guidelines">FAQ/Guidelines</a>
+        <a href="/tos">Terms of Service</a>
+        <a href="/privacy">Privacy Policy</a>
+      </nav>
+      <p>Powered by <a href="https://www.discourse.org">Discourse</a>, best viewed with JavaScript enabled</p>
+    </footer>
+    
+  </body>
+  
+</html>
